@@ -1,0 +1,65 @@
+{
+  "rtirlPullKey": {
+    "type": "text",
+    "label": "RTIRL Pull Key:",
+    "value": ""
+  },
+  "kmStart": {
+    "type": "number",
+    "label": "Starting km",
+    "value": 0
+  },
+  "kmSubDist": {
+    "type": "number",
+    "label": "Distance:",
+    "value": 1,
+    "group": "Subs per km"
+  },
+  "kmSubAmount": {
+    "type": "number",
+    "label": "Amount:",
+    "value": 1,
+    "group": "Subs per km"
+  },
+  "kmBitDist": {
+    "type": "number",
+    "label": "Distance:",
+    "value": 1,
+    "group": "Bits per km"
+  },
+  "kmBitAmount": {
+    "type": "number",
+    "label": "Amount:",
+    "value": 1,
+    "group": "Bits per km"
+  },
+  "kmBuckDist": {
+    "type": "number",
+    "label": "Distance:",
+    "value": 1,
+    "group": "Buck per km"
+  },
+  "kmBuckAmount": {
+    "type": "number",
+    "label": "Amount:",
+    "value": 1,
+    "group": "Buck per km"
+  },
+  "kmCap": {
+    "type": "number",
+    "label": "Distance cap:",
+    "value": 0
+  },
+
+  "fontColor": {
+    "type": "colorpicker",
+    "label": "Font color",
+    "value": "rgb(255, 255, 255)"
+  },
+
+  "backgroundColor": {
+    "type": "colorpicker",
+    "label": "Background color",
+    "value": "rgba(36, 6, 73, 0.15)"
+  }
+}

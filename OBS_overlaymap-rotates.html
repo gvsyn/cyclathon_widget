@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
+    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+    <script src="https://mapbox.github.io/mapbox-gl-language/index.js"></script>
+    <script src="https://unpkg.com/@rtirl/api@latest/lib/index.min.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+      .fadeOutClass{
+          animation: fadeOut 1s;
+          animation-fill-mode: forwards;
+      }
+      @keyframes fadeOut {
+          0% {
+              opacity: 1;
+          }
+          100% {
+              opacity: 0;
+          }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mapbox" style="position: relative; width: 100%; height: 100%;">
+      <div id="map" style="width: 300px; height: 250px"></div>
+      <div
+        id="marker"
+        style="
+          background-color: cyan;
+          height: 12px;
+          width: 12px;
+          position: absolute;
+          border-radius: 50%;
+          top: 119px;
+          left: 144px;
+          box-shadow: 0 0 10px cyan;
+        "
+      ></div>
+    </div>
+    <script>
+      var maphider;
+      var params = new URLSearchParams(window.location.search);
+      if(params.get("fullscreen")) {
+        document.documentElement.setAttribute('style', 'margin: 0; padding: 0; width: 100%; height: 100%;');
+        document.body.setAttribute('style', 'margin: 0; padding: 0; width: 100%; height: 100%;');
+        document.getElementById('map').setAttribute('style', 'height: 100%; width: 100%;');
+        document.getElementById('marker').style.top = 'calc(50% - 6px)';
+        document.getElementById('marker').style.left = 'calc(50% - 6px)';
+      }
+      mapboxgl.accessToken =
+        "pk.eyJ1Ijoia2V2bW8zMTQiLCJhIjoiY2oyMDFlMGpsMDN3bTJ4bjR1MzRrbDFleCJ9.7XEB3HHBGr-N6ataUZh_6g";
+      const pullKey = new URLSearchParams(window.location.search).get("key");
+      var currentZoom = params.get("zoom") ? Number(params.get("zoom")) : 15;
+      var map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v11",
+        interactive: false,
+        attributionControl: false,
+        zoom: currentZoom
+      });
+      map.addControl(
+        new MapboxLanguage({ defaultLanguage: params.get("lang") || "en" })
+      );
+      var currentHeading = 0, currentZoom = 0;
+      RealtimeIRL.forPullKey(pullKey).addLocationListener(
+        function (location) {
+          map.easeTo({center: [location.longitude, location.latitude],
+                      zoom: currentZoom,
+                      bearing: currentHeading,
+                      duration: 1500,
+                      easing: (x) => x,
+          });
+          if (document.getElementById('mapbox').classList.contains("fadeOutClass")) {
+              document.getElementById('mapbox').classList.remove("fadeOutClass");
+          }
+          clearTimeout(maphider);
+          maphider = setTimeout(function() { document.getElementById('mapbox').classList.add("fadeOutClass")},30000);
+        }
+      );
+      
+      RealtimeIRL.forPullKey(pullKey).addHeadingListener(
+        function (heading) {
+          if (heading > 0) {
+            currentHeading = heading.toFixed(0);
+          }
+        }
+      );
+      RealtimeIRL.forPullKey(pullKey).addSpeedListener(
+        function (speed) {
+          speed = speed | 0;
+          zoom = 19 - (speed / 10);
+          zoom = zoom.toFixed(0);
+          currentZoom = zoom;
+        });
+    </script>
+  </body>
+</html>

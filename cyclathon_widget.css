@@ -1,0 +1,62 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+    color: {{fontColor}};
+}
+
+.fadeOutClass{
+    animation: fadeOut 1s;
+    animation-fill-mode: forwards;
+}
+
+.mainContainer {
+  color: #eee;
+/*  position: absolute; */
+  bottom: 0;
+}
+
+#overall {
+  align: right;
+  font-size: 16pt;
+  font-weight: bolder;
+  padding: 0;
+  margin: 0;
+/*  filter: drop-shadow(0 0 0.75rem #ccc); */
+}
+
+.digits {
+    font-size: 24pt;
+    font-weight: normal;
+}
+
+.digitwidget {
+    display: inline-block;
+    background-color:rgba(0, 0, 0, 0.6);
+    margin: 0;
+    padding: 10px;
+}
+
+.km {
+    font-size: 16pt;
+}
+
+#remainingDist {
+    font-size: 32pt;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
