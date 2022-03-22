@@ -55,6 +55,7 @@
         "pk.eyJ1Ijoia2V2bW8zMTQiLCJhIjoiY2oyMDFlMGpsMDN3bTJ4bjR1MzRrbDFleCJ9.7XEB3HHBGr-N6ataUZh_6g";
       const pullKey = new URLSearchParams(window.location.search).get("key");
       var currentZoom = params.get("zoom") ? Number(params.get("zoom")) : 15;
+      // style: 'mapbox://styles/mapbox/dark-v10', for night/dark - look into style update after sundown ?
       var map = new mapboxgl.Map({
         container: "map",
         style: "mapbox://styles/mapbox/streets-v11",
@@ -65,12 +66,14 @@
       map.addControl(
         new MapboxLanguage({ defaultLanguage: params.get("lang") || "en" })
       );
-      var currentHeading = 0, currentZoom = 0;
+      var currentHeading = 0, currentZoom = 0, currentSpeed = 0;
+      var fastMode = 0;
       RealtimeIRL.forPullKey(pullKey).addLocationListener(
         function (location) {
           map.easeTo({center: [location.longitude, location.latitude],
-                      zoom: currentZoom,
+                      zoom: (fastMode == 0 ? currentZoom : currentZoom + 1),
                       bearing: currentHeading,
+                      pitch: (fastMode == 0 ? 0 : 60)
                       duration: 1500,
                       easing: (x) => x,
           });
@@ -91,10 +94,11 @@
       );
       RealtimeIRL.forPullKey(pullKey).addSpeedListener(
         function (speed) {
-          speed = speed | 0;
-          zoom = 19 - (speed / 10);
-          zoom = zoom.toFixed(0);
-          currentZoom = zoom;
+          if (speed > 14) {
+            fastMode = 1;
+          } else if (speed < 8) {
+            fastMode = 0;
+          }
         });
     </script>
   </body>
