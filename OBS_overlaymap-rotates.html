@@ -73,7 +73,7 @@
           map.easeTo({center: [location.longitude, location.latitude],
                       zoom: (fastMode == 0 ? currentZoom : currentZoom + 1),
                       bearing: currentHeading,
-                      pitch: (fastMode == 0 ? 0 : 60)
+                      pitch: (fastMode == 0 ? 0 : 60),
                       duration: 1500,
                       easing: (x) => x,
           });
