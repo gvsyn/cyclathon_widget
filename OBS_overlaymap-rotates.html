@@ -66,14 +66,14 @@
       map.addControl(
         new MapboxLanguage({ defaultLanguage: params.get("lang") || "en" })
       );
-      var currentHeading = 0, currentZoom = 0, currentSpeed = 0;
+      var currentHeading = 0, currentSpeed = 0;
       var fastMode = 0;
       RealtimeIRL.forPullKey(pullKey).addLocationListener(
         function (location) {
           map.easeTo({center: [location.longitude, location.latitude],
-                      zoom: (fastMode == 0 ? currentZoom : currentZoom + 1),
+                      zoom: (fastMode === 0 ? currentZoom : currentZoom + 1),
                       bearing: currentHeading,
-                      pitch: (fastMode == 0 ? 0 : 60),
+                      pitch: (fastMode === 0 ? 0 : 60),
                       duration: 1500,
                       easing: (x) => x,
           });
