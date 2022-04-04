@@ -191,7 +191,6 @@ function updateTotal() {
         thonState.remaining = thonState.total - thonState.covered;
     }
 
-    document.getElementById("remainingDist").innerText = thonState.remaining.toFixed(2);
     document.getElementById("totalDist").innerText = thonState.covered.toFixed(2);
 }
 
