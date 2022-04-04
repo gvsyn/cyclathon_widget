@@ -3,7 +3,7 @@ let thonState = {
     bits: 0,
     dono: 0,
     cap: 0,
-    running: 0,
+    running: 1,
     // distances
     total: 0,
     remaining: 0, // self updates, adjust the total
