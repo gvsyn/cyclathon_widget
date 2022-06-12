@@ -34,3 +34,8 @@ Final note: Tier2 and Tier3 subs count for x2 and x3 the sub value, respectively
 
 Create a new custom widget, and copy the html file to that tab, css
 to css, js to js, json to fields and empty the data one.
+
+## NOTE
+
+This is/was more the proof of concept version. There's more refined versions out there
+now.
